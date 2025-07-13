@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#양식 맛집</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="team2.css">
+  <style>
+    /* 이 스타일 블록은 검색 및 필터 섹션의 원래 레이아웃을 유지하기 위해 남아 있습니다 */
+    /* 헤더, 푸터 및 기본 본문 글꼴과 관련된 모든 스타일은 team2.css에 의해 제거되거나 재정의됩니다 */
+
+    body {
+      font-family: "Cute Font", sans-serif; /* 본문에 Cute Font 적용 */
+      font-size: 1.5em; /* 가독성을 위해 글꼴 크기 증가 */
+      margin: 0;
+      background-color: #fafafa;
+      color: #333;
+    }
+
+    /* 헤더를 위해 team2.css가 적용되도록 원래 헤더 스타일 제거 */
+
+    .search-section {
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.1)),
+        url("./categoryimages/포항/포항2.jpg");
+      background-size: cover;
+      background-position: center;
+      padding: 40px 0 80px;
+      box-shadow: inset 0 -50px 50px rgba(0, 0, 0, 0.2);
+      transition: background 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-nav {
+        display: flex; /* 가로 정렬 보장 */
+        justify-content: center;
+        gap: 20px; /* 두 탭 사이 간격 */
+        margin-bottom: 20px;
+    }
+
+    .top-nav div {
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+    }
+
+    .top-nav div.active {
+        background-color: #1c264f; /* 짙은 파랑 (#1c264f)으로 변경 */
+        color: white;
+    }
+
+    .top-nav div:hover {
+        background-color: rgba(28, 38, 79, 0.7); /* 호버 시 더 짙은 파랑 */
+    }
+
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      padding: 8px 20px;
+       width: 500px;
+      max-width: 90%;
+    }
+
+    .search-box img {
+      width: 20px;
+      margin-right: 10px;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 0.7em; /* 0.7em으로 변경 */
+      font-family: serif; /* serif로 변경 */
+    }
+
+    .filter-tag-section {
+      background-color: #fff;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+      margin-bottom: 5px; /* 간격 줄임 */
+    }
+
+    .filter-tag-wrapper {
+      max-width: 1300px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 0 30px;
+    }
+
+    .filter-tag-button {
+      display: flex;
+      align-items: center;
+      background-color: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-family: serif;
+      font-size: 0.6em;
+      cursor: pointer;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .filter-tag-button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .filter-tag-button img {
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+      filter: brightness(0.5);
+    }
+
+    .filter-tag-button:hover img {
+      filter: brightness(0.2);
+    }
+
+    .category-tag {
+        background-color: #eee;
+        border: 1px solid #1c264f;
+        border-radius: 20px;
+        padding: 8px 15px;
+        font-size: 0.6em;
+        font-family: serif;
+        cursor: pointer;
+        color: #333;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .category-tag.selected {
+        background-color: #ff6f61;
+        color: #fff;
+        border-color: #ff6f61;
+    }
+    .category-tag:hover {
+        background-color: #ff6f61;
+        color: #fff;
+        border-color: #ff6f61;
+    }
+
+    /* 푸터를 위해 team2.css가 적용되도록 원래 푸터 스타일 제거 */
+
+    /* 필터 모달 스타일 */
+    .filter-modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .filter-modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    .close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .filter-group {
+      margin-bottom: 20px;
+    }
+
+    .filter-group h4 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #1c264f;
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-option {
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .filter-option.selected {
+      background-color: #6699ff;
+      color: #fff;
+      border-color: #6699ff;
+    }
+
+    .apply-filters-button {
+      background-color: #ff6f61;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1.1em;
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .apply-filters-button:hover {
+      background-color: #e55a4e;
+    }
+
+    .results-and-sort-container {
+        display: flex;
+        justify-content: space-between; /* 양 끝 정렬 */
+        align-items: center; /* 세로 중앙 정렬 */
+        max-width: 1300px;
+        margin: 5px auto; /* 상하 간격 줄임 */
+        padding: 0 30px; /* 좌우 패딩 추가 */
+    }
+
+    .sort-dropdown select {
+        padding: 8px 15px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        font-size: 0.7em; /* 0.7em으로 변경 */
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23333333%22%20d%3D%22M208.5%2096.5l-80%2080c-4.7%204.7-12.3%204.7-17%200l-80-80c-4.7-4.7-4.7-12.3%200-17s12.3-4.7%2017%200L128%20150.5l71.5-71.5c4.7-4.7%2012.3-4.7%2017%200s4.7%2012.3%200%2017z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 12px;
+        padding-right: 30px;
+        font-family: serif; /* serif로 변경 */
+    }
+
+    .search-results-count {
+        font-size: 0.7em; /* 0.7em으로 변경 */
+        color: #555;
+        font-family: serif; /* serif로 변경 */
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 10px 30px 30px; /* 상단 간격 더 줄임 */
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .card {
+      width: 100%;
+      height: 400px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative; /* 추천 버튼을 위한 위치 지정 */
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .card-content {
+      font-size: 0.8em;
+      padding: 15px;
+      height: 180px;
+      box-sizing: border-box;
+    }
+
+    .category {
+      font-size: 0.9em;
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .card h3 {
+      font-family: serif;
+      margin: 5px 0;
+      font-size: 1.2em;
+      color: #000;
+    }
+
+    .location {
+      font-size: 0.75em;
+      font-family: serif;
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      color: #ff6f61;
+    }
+
+    .location::before {
+      content: "📍";
+      margin-right: 5px;
+    }
+
+    .menu {
+      font-size: 0.7em;
+      color: #444;
+    }
+
+    .mainmenu{
+      font-family: serif;
+      font-size: 0.7em;
+      color: #444;
+    }
+
+    /* 추천 버튼 스타일 */
+    .recommendation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px 10px;
+      font-size: 0.75em;
+    }
+
+    .recommendation-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .recommendation-button:hover {
+      background-color: #45a049;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .search-box {
+        width: 90%;
+      }
+      .filter-tag-wrapper, .results-and-sort-container {
+        padding: 0 15px;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .card-grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+      .search-box {
+        width: 90%;
+      }
+      .filter-modal-content {
+        width: 90%;
+      }
+      .filter-tag-wrapper, .results-and-sort-container {
+        padding: 0 10px;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .sort-dropdown {
+          width: 100%;
+          text-align: right;
+      }
+      .search-results-count {
+          width: 100%;
+          text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="./images/pohang.jpg" width="40" height="40" alt="포항">
+  <a href="./Team2.html" class="logo">
+    <span class="bold-underline">POCHELIN</span> <span class="blue-text">GUIDE</span>
+  </a>
+  <nav class="menu">
+      <a href="#mood">MOOD</a>
+      <a href="#category">CATEGORY</a>
+      <a href="#review">REVIEW</a>
+    </nav>
+  </header>
+
+  <div class="search-section">
+    <div class="top-nav">
+      <div class="active" data-search-type="integrated">통합검색</div>
+      <div data-search-type="restaurant">식당명 검색</div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <img src="./categoryimages/icon/돋보기.png" alt="돋보기">
+        <input type="text" id="searchInput" placeholder="검색어를 입력해주세요">
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-tag-section">
+    <div class="filter-tag-wrapper" id="filterTagWrapper">
+      <div class="filter-tag-button" onclick="openFilterModal()">
+        <img src="./categoryimages/icon/필터.png" alt="필터">
+        <span>필터</span>
+      </div>
+      <div class="category-tag selected" data-category="전체" data-filter-type="category">전체</div>
+      <div class="category-tag" data-category="한식" data-filter-type="category">한식</div>
+      <div class="category-tag" data-category="내 주변" data-filter-type="category">내 주변</div>
+      </div>
+  </div>
+
+  <div class="results-and-sort-container">
+    <div class="search-results-count" id="searchResultsCount">3개 검색 결과</div>
+    <div class="sort-dropdown">
+        <select id="sortSelect">
+            <option value="name_asc">가나다순</option>
+            <option value="recommendation_desc">추천순</option>
+        </select>
+    </div>
+  </div>
+
+  <div class="card-grid" id="restaurantCardsContainer">
+    </div>
+
+  <div id="filterModal" class="filter-modal">
+    <div class="filter-modal-content">
+      <span class="close-button" onclick="closeFilterModal()">&times;</span>
+      <h5>필터 적용</h5>
+
+      <div class="filter-group">
+        <h4>가격대</h4>
+        <div class="filter-options" id="priceFilterOptions">
+          <div class="filter-option" data-value="~1만원" data-filter-type="price">~1만원</div>
+          <div class="filter-option" data-value="1만원~2만원" data-filter-type="price">1만원~2만원</div>
+          <div class="filter-option" data-value="3만원~5만원" data-filter-type="price">3만원~5만원</div>
+          <div class="filter-option" data-value="5만원~" data-filter-type="price">5만원~</div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>방문목적</h4>
+        <div class="filter-options" id="purposeFilterOptions">
+          <div class="filter-option" data-value="가족모임" data-filter-type="purpose">가족모임</div>
+          <div class="filter-option" data-value="데이트" data-filter-type="purpose">데이트</div>
+          <div class="filter-option" data-value="혼밥" data-filter-type="purpose">혼밥</div>
+          <div class="filter-option" data-value="소개팅" data-filter-type="purpose">소개팅</div>
+          <div class="filter-option" data-value="회식" data-filter-type="purpose">회식</div>
+          <div class="filter-option" data-value="아침식사" data-filter-type="purpose">아침식사</div>
+          <div class="filter-option" data-value="해장" data-filter-type="purpose">해장</div>
+          <div class="filter-option" data-value="혼술" data-filter-type="purpose">혼술</div>
+          <div class="filter-option" data-value="외식" data-filter-type="purpose">외식</div>
+        </div>
+      </div>
+
+      <button class="apply-filters-button" onclick="applyFilters()">필터 적용</button>
+    </div>
+  </div>
+
+  <footer>
+  <p>© 2025 POCHELIN GUIDE. All rights reserved.</p>
+  <p>문의: <a href="mailto:contact@pochelin.kr">contact@pochelin.kr</a></p>
+  <p>제작: Team 2 Web Project</p>
+</footer>
+
+
+  <script>
+    // 💡 JavaScript 시작
+    const restaurantCardsContainer = document.getElementById('restaurantCardsContainer');
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const searchResultsCount = document.getElementById('searchResultsCount');
+    const filterTagWrapper = document.getElementById('filterTagWrapper');
+    const priceFilterOptions = document.getElementById('priceFilterOptions');
+    const purposeFilterOptions = document.getElementById('purposeFilterOptions');
+
+    // 식당 데이터 (JavaScript 배열로 관리하여 정렬 및 필터링 용이하게 함)
+    // 실제 웹 애플리케이션에서는 이 데이터는 백엔드 서버나 API에서 가져옵니다.
+    let restaurantData = [
+      
+      
+    ];
+
+    let currentFilters = {
+        categories: ['한식'], // 초기에는 '한식'만 선택된 것으로 가정 (한식.html이므로)
+        priceRanges: [],
+        purposes: []
+    };
+    let currentSearchTerm = '';
+    let currentSort = 'name_asc'; // 초기 정렬 기준
+
+    // 카드 렌더링 함수
+    function renderCards(dataToRender) {
+      restaurantCardsContainer.innerHTML = ''; // 기존 카드 모두 제거
+      searchResultsCount.textContent = `${dataToRender.length}개 검색 결과`;
+
+      if (dataToRender.length === 0) {
+          restaurantCardsContainer.innerHTML = '<p style="text-align: center; width: 100%; grid-column: span 4;">검색 결과가 없습니다.</p>';
+          return;
+      }
+
+      dataToRender.forEach(restaurant => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <a href="./무엇을먹을까요.식당설명.html" target="_blank">
+            <img src="${restaurant.image}" alt="${restaurant.name}">
+          </a>
+          <div class="card-content">
+            <div class="category">${restaurant.category}</div>
+            <h3>${restaurant.name}</h3>
+            <div class="location">${restaurant.location}</div>
+            <div class="mainmenu">${restaurant.mainmenu}</div>
+          </div>
+          <div class="recommendation">
+            <span>추천 지수: ${restaurant.recommendationScore}</span>
+            <button class="recommendation-button" data-id="${restaurant.id}">만족해요!</button>
+          </div>
+        `;
+        restaurantCardsContainer.appendChild(card);
+      });
+
+      // 새로 생성된 추천 버튼에 이벤트 리스너 추가
+      document.querySelectorAll('.recommendation-button').forEach(button => {
+          button.onclick = function() {
+              const id = parseInt(this.dataset.id);
+              incrementRecommendationScore(id);
+          };
+      });
+    }
+
+    // 데이터 필터링 및 정렬 함수
+    function filterAndSortCards() {
+        let filteredData = [...restaurantData]; // 원본 데이터 복사
+
+        // 2. 검색어 필터링 (식당 이름, 음식명, 지역)
+        if (currentSearchTerm) {
+            const searchType = document.querySelector('.top-nav div.active').dataset.searchType;
+            const searchTermLower = currentSearchTerm.toLowerCase();
+
+            filteredData = filteredData.filter(restaurant => {
+                const nameMatch = restaurant.name.toLowerCase().includes(searchTermLower);
+                if (searchType === 'restaurant') {
+                    return nameMatch;
+                } else { // integrated search
+                    const menuMatch = restaurant.mainmenu.toLowerCase().includes(searchTermLower);
+                    const locationMatch = restaurant.location.toLowerCase().includes(searchTermLower) || restaurant.region.toLowerCase().includes(searchTermLower);
+                    return nameMatch || menuMatch || locationMatch;
+                }
+            });
+        }
+
+        // 3. 필터링 (카테고리, 가격대, 방문목적)
+        filteredData = filteredData.filter(restaurant => {
+            // 카테고리 필터
+            const categoryMatch = currentFilters.categories.includes('전체') || currentFilters.categories.includes(restaurant.category.replace('#', ''));
+            // '내 주변'은 실제 위치 기반 데이터가 없으므로 임시로 '환호동'만 보여준다고 가정
+            const nearMeMatch = !currentFilters.categories.includes('내 주변') || restaurant.region === '환호동';
+
+            // 가격대 필터
+            const priceMatch = currentFilters.priceRanges.length === 0 || currentFilters.priceRanges.includes(restaurant.priceRange);
+
+            // 방문목적 필터 (하나라도 일치하면 O)
+            const purposeMatch = currentFilters.purposes.length === 0 ||
+                                 currentFilters.purposes.some(purpose => restaurant.purposes.includes(purpose));
+
+            return categoryMatch && nearMeMatch && priceMatch && purposeMatch;
+        });
+
+
+        // 1. 정렬
+        if (currentSort === 'name_asc') {
+            filteredData.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (currentSort === 'recommendation_desc') {
+            filteredData.sort((a, b) => b.recommendationScore - a.recommendationScore);
+        }
+
+        renderCards(filteredData);
+    }
+
+    // 1. 가나다순/추천순 정렬 이벤트 리스너
+    sortSelect.addEventListener('change', (event) => {
+      currentSort = event.target.value;
+      filterAndSortCards();
+    });
+
+    // 2. 검색어 입력 이벤트 리스너
+    searchInput.addEventListener('keyup', (event) => {
+      currentSearchTerm = event.target.value;
+      filterAndSortCards();
+    });
+
+    // 검색 탭 클릭 시 플레이스홀더 변경 및 재필터링
+    document.querySelectorAll('.top-nav div').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.top-nav div').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            const searchType = this.dataset.searchType;
+            if (searchType === 'restaurant') {
+                searchInput.placeholder = '식당명을 입력해주세요';
+            } else {
+                searchInput.placeholder = '검색어를 입력해주세요';
+            }
+            // 검색 타입이 바뀌면 재필터링
+            filterAndSortCards();
+        });
+    });
+
+    // 3. 필터 모달 열기
+    function openFilterModal() {
+      document.getElementById('filterModal').style.display = 'block';
+    }
+
+    // 3. 필터 모달 닫기
+    function closeFilterModal() {
+      document.getElementById('filterModal').style.display = 'none';
+    }
+
+    // 3. 필터 옵션 선택/해제 토글
+    document.querySelectorAll('.filter-option').forEach(option => {
+      option.addEventListener('click', function() {
+        this.classList.toggle('selected');
+      });
+    });
+
+    // 3. 필터 적용 및 태그 생성/업데이트
+    function applyFilters() {
+        // 현재 선택된 필터 초기화
+        currentFilters.priceRanges = Array.from(priceFilterOptions.querySelectorAll('.filter-option.selected'))
+                                        .map(option => option.dataset.value);
+        currentFilters.purposes = Array.from(purposeFilterOptions.querySelectorAll('.filter-option.selected'))
+                                    .map(option => option.dataset.value);
+
+        // '전체' 및 '내 주변'을 제외한 기존 카테고리 태그 제거
+        filterTagWrapper.querySelectorAll('.category-tag[data-filter-type="filter-applied"]').forEach(tag => tag.remove());
+
+        // 필터 옵션에서 선택된 값들을 태그로 추가
+        [...currentFilters.priceRanges, ...currentFilters.purposes].forEach(filterValue => {
+            const newTag = document.createElement('div');
+            newTag.className = 'category-tag selected'; // 적용된 필터이므로 selected 유지
+            newTag.textContent = filterValue;
+            newTag.dataset.category = filterValue; // 필터링에 사용할 값
+            newTag.dataset.filterType = 'filter-applied'; // 적용된 필터 태그임을 명시
+            newTag.onclick = function() {
+                // 태그 클릭 시 해당 필터 해제
+                if (priceFilterOptions.querySelector(`.filter-option[data-value="${filterValue}"]`)) {
+                    priceFilterOptions.querySelector(`.filter-option[data-value="${filterValue}"]`).classList.remove('selected');
+                }
+                if (purposeFilterOptions.querySelector(`.filter-option[data-value="${filterValue}"]`)) {
+                    purposeFilterOptions.querySelector(`.filter-option[data-value="${filterValue}"]`).classList.remove('selected');
+                }
+                applyFilters(); // 필터 재적용
+            };
+            filterTagWrapper.appendChild(newTag);
+        });
+
+        // 카테고리 태그 (전체, 한식, 내 주변) 선택 상태 관리
+        document.querySelectorAll('.category-tag[data-filter-type="category"]').forEach(tag => {
+            tag.classList.remove('selected');
+            if (tag.dataset.category === '한식') { // '한식' 페이지이므로 기본 '한식' 선택
+                tag.classList.add('selected');
+                currentFilters.categories = ['한식'];
+            } else if (tag.dataset.category === '전체' && currentFilters.categories.length === 0) {
+                 tag.classList.add('selected'); // 필터 없을 시 '전체' 선택
+                 currentFilters.categories = ['전체'];
+            }
+        });
+         // '전체' 또는 '내 주변' 태그 클릭 시
+        document.querySelectorAll('.category-tag[data-filter-type="category"]').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.category-tag[data-filter-type="category"]').forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+                currentFilters.categories = [this.dataset.category]; // 선택된 카테고리 설정
+                filterAndSortCards();
+            });
+        });
+
+
+        filterAndSortCards(); // 필터 적용 후 카드 재렌더링
+        closeFilterModal();
+    }
+
+
+    // "추천해요!" 버튼 클릭 시 추천 지수 증가 (로컬에서만, 백엔드 필요)
+    function incrementRecommendationScore(id) {
+        const restaurant = restaurantData.find(r => r.id === id);
+        if (restaurant) {
+            restaurant.recommendationScore++;
+            alert(`${restaurant.name}의 추천 지수가 ${restaurant.recommendationScore}로 증가했습니다!`);
+            filterAndSortCards(); // 지수 변경 후 재정렬을 위해 호출
+        }
+    }
+
+
+    // 페이지 로드 시 초기 렌더링
+    window.onload = function () {
+      filterAndSortCards(); // 초기 로드 시 필터 및 정렬 적용
+    };
+    // 💡 JavaScript 끝
+  </script>
+
+</body>
+</html>
