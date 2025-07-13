@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Gowun+Batang:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./css/team2.css">
+
+  <title>POCHELIN GUIDE 포슐랭가이드</title>
+  <style>
+    /* 1. 제출한 카드가 오른쪽으로 천천히 이동(무한루프)하게 하여 홈페이지에 유동성 주기 */
+    @keyframes slide {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%); /* 전체 너비의 절반만 이동하도록 수정 */
+      }
+    }
+
+    #card-container-wrapper { /* 스크롤바를 숨기기 위한 래퍼 추가 */
+      overflow: hidden; /* 2. 제출한 card 아래 스크롤바가 보이지 않게 */
+      width: 100%;
+      position: relative;
+    }
+
+    #card-container {
+      white-space: nowrap;
+      animation: slide linear infinite;
+      animation-play-state: running; /* 기본적으로 재생 */
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px;
+      width: fit-content; /* 내용물에 맞춰 너비 조절 */
+    }
+
+    #card-container:hover {
+      animation-play-state: paused;
+    }
+  </style>
+
+</head>
+
+<body>
+  <header>
+    <img src="./images/.imagespohang.jpg" width="40" height="40" alt="포항">
+    <a href="./pages/team2.html" class="logo">
+      <span class="bold-underline">POCHELIN</span> <span class="blue-text">GUIDE</span>
+    </a>
+    <nav class="menu">
+      <a href="#mood">MOOD</a>
+      <a href="#category">CATEGORY</a>
+      <a href="#review">REVIEW</a>
+    </nav>
+  </header>
+  <section class="intro-section">
+    <div class="intro-box">
+      <div>
+        <p>안녕하세요, 포슐랭 가이드입니다. <br> 나만의 맛집을 자유롭게 공유해주세요.</p>
+      </div>
+      <div class="upload-form">
+        <form action="#" method="post">
+          <input type="text" name="store" placeholder="맛집 이름"><br>
+          <input type="text" name="location" placeholder="위치"><br>
+          <input type="text" name="description" placeholder="설명"><br>
+          <input type="text" name="contact" placeholder="연락처"><br>
+          <input type="text" name="hours" placeholder="영업 시간"><br>
+          <input type="text" name="hashtags" placeholder="#해시태그 (쉼표로 구분)"><br>
+          <input type="submit" value="제출하기">
+        </form>
+      </div>
+    </div>
+  </section>
+
+   <section id="submission-message"
+    style="text-align: center; font-weight: bold; margin-top: 30px; color: green; font-size: 24px; transition: opacity 0.5s;">
+  </section>
+  <div id="card-container-wrapper"> <section id="card-container">
+    </section>
+  </div>
+
+
+  <section id="mood">
+    <h2 class="section-title">[🌃MOOD🌃] 어떤 맛집을 찾으시나요?</h2>
+    <div class="keyword-links">
+      <a href="./pages/.solo.html"># 혼밥하기 좋은 곳</a>
+      <a href="./pages/.date.html"># 데이트하기 좋은 레스토랑</a>
+      <a href="./pages/.meat.html"># 시험 끝나고 고기 때리기 좋은 집</a>
+      <a href="./pages/.meeting.html"># 회식 장소</a>
+
+    </div>
+  </section>
+
+  <section id="category">
+    <h2 class="section-title">[📍CATEGORY📍] 무엇을 먹을까요?</h2>
+    <div class="category-wrapper">
+      <button class="nav-button nav-button-left">◀</button>
+      <div class="category-image-container">
+        <div class="category-image-box">
+          <a href="./pages/korean.html">
+            <img src="./images/음식한식.jpg" alt="한식">
+            <span>한식</span>
+          </a>
+        </div>
+        <div class="category-image-box">
+          <a href="./pages/chinese.html">
+            <img src="./images/음식중식.webp" alt="중식">
+            <span>중식</span>
+          </a>
+        </div>
+        <div class="category-image-box">
+          <a href="./pages/japanese.html">
+            <img src="./images/음식일식.webp" alt="일식">
+            <span>일식</span>
+          </a>
+        </div>
+        <div class="category-image-box">
+          <a href="./pages/western.html">
+            <img src="음식/양식.avif" alt="양식">
+            <span>양식</span>
+          </a>
+        </div>
+        <div class="category-image-box">
+          <a href="./pages/기타.html">
+            <img src="./images/음식베트남식.webp" alt="기타">
+            <span>기타</span>
+          </a>
+        </div>
+      </div>
+      <button class="nav-button nav-button-right">▶</button>
+    </div>
+  </section>
+
+  <section id="review">
+    <h2 class="section-title">[⭐REVIEW⭐] 로컬 맛집을 찾아서</h2>
+    <div class="local-recommendations">
+      <div class="card">
+        <a
+          href="https://map.naver.com/p/entry/place/1704823665?lng=129.4049049&lat=36.0728946&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202507081723&locale=ko&svcName=map_pcv5&searchType=place&c=15.00,0,0,0,dh">
+          <img src="./images/columnimages카츠닉.jpg" alt="카츠닉 사진">
+        </a>
+        <div class="card-content">
+          <h4>포슐랭 매거진 I<br>카츠닉에서 만나는 진짜 히레카츠</h4>
+          <p>포항에서 돈카츠 맛집을 찾고 있다면, 북구 양덕동에 위치한 카츠닉을 추천하고 싶다. 수많은 돈카츠 가게가 생기고 사라지는 포항에서, 이곳은 오랜 시간 지역 주민들에게 꾸준히 사랑받아온 집이다. 깔끔한 외관과 조용한 분위기의 매장, 그리고 무엇보다 고집스러운 맛 덕분이다.</p>
+          <table>
+            <tr>
+              <td>위치</td>
+              <td>경북 포항시 북구 해안로445번길 13 1층 카츠닉</td>
+            </tr>
+            <tr>
+              <td>대표 메뉴</td>
+              <td>히레카츠 정식 ₩14,000</td>
+            </tr>
+            <tr>
+              <td>영업시간</td>
+              <td>11:30 ~ 20:30</td>
+            </tr>
+            <tr>
+              <td>연락처</td>
+              <td>054-242-0145</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <a
+          href="https://map.naver.com/p/entry/place/1167650992?lng=129.3983839&lat=36.0813101&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202507081731&locale=ko&svcName=map_pcv5&fromPanelNum=1&additionalHeight=76&timestamp=202507081731&locale=ko&svcName=map_pcv5&entry=plt&searchType=place&c=15.00,0,0,0,dh">
+          <img src="./images/columnimages스프커리보울.jpg" alt="스프커리보울 사진">
+        </a>
+        <div class="card-content">
+          <h4>포슐랭 매거진 II <br> 스프커리 보울에서 만나는 깊은 국물의 매력</h4>
+          <p>포항에서 흔히 볼 수 있는 카레집과는 조금 다른, 특별한 분위기의 공간이 있다. 이름부터 독특한 ‘스프커리보울’. 이곳은 일본식 스프카레라는 장르를 지역에 알리고 있는, 몇 안 되는 전문점이다.</p>
+          <table>
+            <tr>
+              <td>위치</td>
+              <td>경북 포항시 북구 장량로158번길 5-11</td>
+            </tr>
+            <tr>
+              <td>대표 메뉴</td>
+              <td>에비토치킨 ₩14,000</td>
+            </tr>
+            <tr>
+              <td>영업시간</td>
+              <td>12:00 ~ 21:00</td>
+            </tr>
+            <tr>
+              <td>연락처</td>
+              <td>054-254-4138</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <a
+          href="https://map.naver.com/p/entry/place/38284728?lng=129.3960475&lat=36.0815467&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202507081756&locale=ko&svcName=map_pcv5&entry=plt&searchType=place&c=15.00,0,0,0,dh">
+          <img src="./images/columnimages논스탠다드.jpg" alt="논스탠다드 사진">
+        </a>
+        <div class="card-content">
+          <h4>포슐랭 매거진 III <br> 포항 브런치 카페, 논스탠다드에서 여유로운 한 끼</h4>
+          <p>이름처럼, 이곳은 평범하지 않다. 포항 북구 장량동의 한적한 골목, 거기에 감각적인 공간 하나가 자리 잡고 있다. 브런치 카페 ‘논스탠다드’는 포항에서 보기 드문 분위기와 메뉴 구성으로, 이미 많은 지역민들의 입소문을 타고 있는 곳이다.</p>
+          <table>
+            <tr>
+              <td>위치</td>
+              <td>경북 포항시 북구 장량로 144 논스탠다드 브런치카페</td>
+            </tr>
+            <tr>
+              <td>대표 메뉴</td>
+              <td>브루클린소스 샌드위치 ₩18,500</td>
+            </tr>
+            <tr>
+              <td>영업시간</td>
+              <td>09:30 ~ 21:00</td>
+            </tr>
+            <tr>
+              <td>연락처</td>
+              <td>0507-1435-8487</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      </div>
+  </section>
+
+  <script>
+    const cardContainer = document.getElementById("card-container");
+    const message = document.getElementById("submission-message");
+
+    // 🔹 현재 로그인한 사용자 이름 (세션 유지용)
+    let currentUser = localStorage.getItem("currentUser") || "";
+
+    if (!currentUser) {
+      currentUser = prompt("작성자 이름을 입력해주세요:");
+      localStorage.setItem("currentUser", currentUser);
+    }
+
+    function createCard(data, index) {
+      const card = document.createElement("div");
+      // 2. 제출한 카드의 디자인을 푸른 테두리에 하얀색 배경색, 그림자를 넣어 예쁘게 만들기
+      card.style.flex = "0 0 auto";
+      card.style.width = "300px";
+      card.style.border = "2px solid rgb(11, 11, 114)"; /* 푸른 테두리 */
+      card.style.borderRadius = "15px";
+      card.style.padding = "20px";
+      card.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)"; /* 그림자 */
+      card.style.backgroundColor = "white"; /* 하얀색 배경색 */
+      card.style.margin = "10px"; /* 카드 간 간격 */
+      card.dataset.index = index;
+
+      card.innerHTML = `
+      <h3>${data.store}</h3>
+      <p><strong>위치:</strong> ${data.location}</p>
+      <p><strong>소개:</strong> ${data.description}</p>
+      <p><strong>연락처:</strong> ${data.contact}</p>
+      <p><strong>영업시간:</strong> ${data.hours}</p>
+      <p><strong>해시태그:</strong> ${data.hashtags}</p>
+      <p><em>작성자: ${data.author}</em></p>
+    `;
+
+      // 🔹 작성자만 수정/삭제 가능
+      if (data.author === currentUser) {
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "수정하기";
+        editBtn.className = "edit-btn";
+        editBtn.onclick = () => {
+          const form = document.querySelector(".upload-form form");
+          form.store.value = data.store;
+          form.location.value = data.location;
+          form.description.value = data.description;
+          form.contact.value = data.contact;
+          form.hours.value = data.hours;
+          form.hashtags.value = data.hashtags;
+          form.dataset.editingIndex = index;
+        };
+        card.appendChild(editBtn);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "삭제하기";
+        deleteBtn.className = "delete-btn";
+        deleteBtn.onclick = () => {
+          const cards = getCards();
+          cards.splice(index, 1);
+          saveCards(cards);
+          renderCards();
+        };
+        card.appendChild(deleteBtn);
+      }
+
+      cardContainer.appendChild(card);
+    }
+
+    function saveCards(cards) {
+      localStorage.setItem("cards", JSON.stringify(cards));
+    }
+
+    function getCards() {
+      return JSON.parse(localStorage.getItem("cards") || "[]");
+    }
+
+    function renderCards() {
+      cardContainer.innerHTML = "";
+      const cards = getCards();
+      // Duplicate cards to create a seamless loop effect
+      const duplicatedCards = [...cards, ...cards]; // Duplicate the array
+      duplicatedCards.forEach((data, index) => createCard(data, index));
+
+      // Calculate animation duration dynamically based on content width
+      const totalWidth = cardContainer.scrollWidth / 2; // Half because we duplicated the content
+      const duration = totalWidth / 50; // Adjust 50 for speed (lower value = faster)
+      cardContainer.style.animationDuration = `${duration}s`;
+    }
+
+    document.querySelector(".upload-form form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const data = {
+        store: this.store.value,
+        location: this.location.value,
+        description: this.description.value,
+        contact: this.contact.value,
+        hours: this.hours.value,
+        hashtags: this.hashtags.value,
+        author: currentUser,
+      };
+
+      let cards = getCards();
+
+      if (this.dataset.editingIndex !== undefined) {
+        const index = parseInt(this.dataset.editingIndex);
+        cards[index] = data;
+        delete this.dataset.editingIndex;
+      } else {
+        cards.push(data);
+      }
+
+      saveCards(cards);
+      renderCards();
+
+      // ✅ 메시지 보여주고 3초 뒤 사라짐
+      message.textContent = "제출이 완료되었습니다!";
+      message.style.opacity = "1";
+      setTimeout(() => {
+        message.style.opacity = "0";
+      }, 3000);
+
+      this.reset();
+    });
+
+    window.onload = function () {
+      renderCards();
+    };
+
+    // 3. category-무엇을 먹을까요? 부분의 사진을 4개만 기본적으로 띄우고, 그 이상은 < > 버튼을 누르면 넘어가게 구성
+    document.addEventListener("DOMContentLoaded", function() {
+      const categoryContainer = document.querySelector(".category-image-container");
+      const leftButton = document.querySelector(".nav-button-left");
+      const rightButton = document.querySelector(".nav-button-right");
+      const scrollAmount = 880; // Approximately 4 card widths (200px width + 20px gap) * 4 = 880px
+
+      leftButton.addEventListener("click", () => {
+        categoryContainer.scrollBy({
+          left: -scrollAmount,
+          behavior: "smooth"
+        });
+      });
+
+      rightButton.addEventListener("click", () => {
+        categoryContainer.scrollBy({
+          left: scrollAmount,
+          behavior: "smooth"
+        });
+      });
+    });
+  </script>
+
+  <footer
+    style="background-color: #f1f1f1; padding: 20px; text-align: center; font-size: 14px; color: #555; margin-top: 50px;">
+    <p>© 2025 POCHELIN GUIDE. All rights reserved.</p>
+    <p>문의: <a href="mailto:contact@pochelin.kr">contact@pochelin.kr</a></p>
+    <p>제작: Team 2 Web Project</p>
+  </footer>
+
+</body>
+
+</html>
